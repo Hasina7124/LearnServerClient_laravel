@@ -44,11 +44,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        $users = User::all();
-
-        // dd($id);
-
-        $user = $users->find($id);
+        $users = User::find($id);
 
         return $user;
     }
@@ -66,13 +62,9 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id)
     {
-        $user = User::find($id);
+        $user = User::find($id)->update($request->validated());
 
-        $user->update($request->validated());
-
-        echo "$request->validated()";
-
-        return $user;
+        return "Update successful";
     }
 
     /**
@@ -86,6 +78,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return $users;
+        return "Delete successful";
     }
 }
