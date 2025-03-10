@@ -7,6 +7,8 @@ use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 
+use Illuminate\Http\JsonResponse;
+
 class UserController extends Controller
 {
     /**
@@ -16,7 +18,7 @@ class UserController extends Controller
     {
         $user = User::all();
 
-        return response()->json($user);
+        return response()->json(['user' => $user]);
     }
 
     /**
@@ -37,6 +39,10 @@ class UserController extends Controller
         $user = new User($data);
 
         $user->save();
+
+        return response()->json([
+            'message' => "User created successfuly",
+        ],200);
     }
 
     /**
@@ -46,7 +52,9 @@ class UserController extends Controller
     {
         $users = User::find($id);
 
-        return $user;
+        return response()->json([
+            'user' => $user,
+        ], 200);
     }
 
     /**
@@ -64,7 +72,9 @@ class UserController extends Controller
     {
         $user = User::find($id)->update($request->validated());
 
-        return "Update successful";
+        return response()->json([
+            'message' => "User updated successfuly",
+        ], 200);
     }
 
     /**
@@ -78,6 +88,8 @@ class UserController extends Controller
 
         $user->delete();
 
-        return "Delete successful";
+        return response()->json([
+            'message' => "User deleted successfuly",
+        ], 200);
     }
 }
