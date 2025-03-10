@@ -16,7 +16,9 @@ class LoginController extends Controller
 
         if(Auth::attempt($data))
         {
-            echo 'login successful';
+            $token = $request->user()->createToken(time());
+
+            return ['token' => $token->plainTextToken];
         }
     }
 }
